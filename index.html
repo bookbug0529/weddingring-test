@@ -316,7 +316,25 @@
       container.appendChild(item);
     });
   }
+function copyCounselorAnswers() {
+    let textToCopy = `[퍼스널 웨딩밴드 테스트 - 고객 선택 답변]\n`;
+    textToCopy += `최종 유형: ${document.getElementById('result-mbti').innerText} (${document.getElementById('result-title').innerText})\n\n`;
+    
+    userAnswers.forEach(ans => {
+      textToCopy += `Q${ans.qNum}. ${ans.qText}\n👉 [선택 ${ans.choice} / ${ans.type}] ${ans.text}\n\n`;
+    });
 
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.innerText = '✓ 복사 완료!';
+      setTimeout(() => {
+        btn.innerText = '📋 전체 답변 복사하기';
+      }, 2000);
+    }).catch(err => {
+      alert('복사에 실패했습니다. 수동으로 텍스트를 드래그하여 복사해 주세요.');
+    });
+  }
+  
   function toggleCounselorModal() {
     const modal = document.getElementById('counselor-modal');
     modal.classList.toggle('active');
